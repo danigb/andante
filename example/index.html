@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Andante example</title>
+</head>
+<body>
+  <script src="soundfont-player.js" charset="utf-8"></script>
+  <script src="score.min.js"></script>
+  <script src="/dist/andante.js"></script>
+  <script>
+    var ctx = new AudioContext();
+    var soundfont = new Soundfont(ctx);
+    var andante = new Andante(ctx);
+
+    var instruments = {
+      'piano': soundfont.instrument('acoustic_grand_piano'),
+      'strings': soundfont.instrument('trumpet')
+    };
+
+    var melody = Score("c d | c d e f | c d e f g a b c5", { set: { instrument: 'piano' } });
+    var reversed = melody.reverse().set({ instrument: 'strings' });
+    var score = Score.merge(melody, reversed).repeat(2);
+    console.log(score);
+
+    console.log("waiting for instruments...");
+    soundfont.onready(function() {
+      console.log("Instruments loaded.");
+      andante.play(score, 120, function(event, time) {
+        instruments[event.instrument].play(event.value, time(event.position), time(event.duration));
+      });
+    });
+
+  </script>
+</body>
+</html>

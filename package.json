@@ -1,0 +1,34 @@
+{
+  "name": "andante",
+  "version": "0.1.0",
+  "description": "Quick music notation player for web",
+  "main": "index.js",
+  "scripts": {
+    "test": "vows test/*.js",
+    "dist": "browserify index.js > dist/andante.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danigb/andante.git"
+  },
+  "keywords": [
+    "music",
+    "web",
+    "audio",
+    "player",
+    "soundfont",
+    "notation",
+    "solfege",
+    "score"
+  ],
+  "author": "danigb",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danigb/andante/issues"
+  },
+  "homepage": "https://github.com/danigb/andante",
+  "dependencies": {
+    "melody-parser": "^0.1.0",
+    "soundfont-player": "^0.2.0"
+  }
+}
