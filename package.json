@@ -28,7 +28,5 @@
   },
   "homepage": "https://github.com/danigb/andante",
   "dependencies": {
-    "melody-parser": "^0.1.0",
-    "soundfont-player": "^0.2.0"
   }
 }

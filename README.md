@@ -17,8 +17,8 @@ andante.schedule(events, function(event, position, duration) {
 });
 ```
 
-This scheduler works great with [ScoreJS](http://github.com/danigb/scorejs)
-and any audio instrument (like [soundfont-player](http://github.com/danigb/soundfont-player))
+This is the scheduler of [ScoreJS](http://github.com/danigb/scorejs)
+and works easy with [soundfont-player](http://github.com/danigb/soundfont-player))
 
 ```js
 var ctx = new AudioContext();
@@ -30,12 +30,22 @@ var melody = Score('a b c d | e f g a4');
 var reverse = melody.reverse().transpose('M3');
 var score = Score.merge(melody, reverse).repeat(5).toTempo(90);
 
-var piano = soundfont.instruent('grand_piano');
+var piano = soundfont.instruent('acoustic_grand_piano');
 
 andante.schedule(score, function(event, position, duration)) {
   piano.play(event.value, position, duration);
 }
 ```
+
+## Running the example
+
+Clone this repo, start a server:
+```bash
+npm i -g http-server
+http-server
+```
+
+And visit [http://localhost:8080/example](http://localhost:8080/example)
 
 ## License
 

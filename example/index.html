@@ -5,8 +5,10 @@
   <title>Andante example</title>
 </head>
 <body>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js">
+  </script>
   <script src="soundfont-player.js" charset="utf-8"></script>
-  <script src="score.min.js"></script>
+  <script src="score.js"></script>
   <script src="/dist/andante.js"></script>
   <script>
     var ctx = new AudioContext();
@@ -14,20 +16,23 @@
     var andante = new Andante(ctx);
 
     var instruments = {
-      'piano': soundfont.instrument('acoustic_grand_piano'),
-      'strings': soundfont.instrument('trumpet')
+      'piano': soundfont.instrument('acoustic_grand_piano')
     };
 
-    var melody = Score("c d | c d e f | c d e f g a b c5", { set: { instrument: 'piano' } });
-    var reversed = melody.reverse().set({ instrument: 'strings' });
-    var score = Score.merge(melody, reversed).repeat(2);
-    console.log(score);
+    $.getJSON('AnthropologyParker.ls.json', function(json) {
+      var score = Score.build(json);
+      var melody = Score(score.parts['melody2'], { set: { amp: 0.8 }})
+      var chords = Score(score.parts['chords'], {
+        loopUntil: melody.duration(), playChords: true,
+        set: { amp: 0.2 }
+      })
+      var toPlay = Score.merge(chords, melody).notes()
 
-    console.log("waiting for instruments...");
-    soundfont.onready(function() {
-      console.log("Instruments loaded.");
-      andante.play(score, 120, function(event, time) {
-        instruments[event.instrument].play(event.value, time(event.position), time(event.duration));
+      soundfont.onready(function() {
+        console.log("Instruments loaded.");
+        andante.play(toPlay, 120, function(event, time) {
+          instruments['piano'].play(event.note.midi, time(event.position), time(event.duration));
+        });
       });
     });
 
