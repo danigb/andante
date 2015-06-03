@@ -1,7 +1,5 @@
 # andante
 
-__This is work in progress. Do not use ... yet__
-
 Yet another music scheduler. Given an array of events with value, position and
 duration (both in seconds), schedule the events to play:
 
@@ -9,16 +7,19 @@ duration (both in seconds), schedule the events to play:
 var ctx = new AudioContext();
 var andante = require('andante')(ctx);
 
+var instrument = ...;
+
 var events = "c d e f g".split(' ').map(function(note, index) {
   return { value: note, position: index * 0.5, duration: 0.5 };
 });
-andante.schedule(events, function(event, position, duration) {
-  // play instrument
+andante.schedule(events, function(event, time) {
+  // time function maps from events time to WebAudio context time
+  instrument.play(event.value, time(event.position), time(event.duration))
 });
 ```
 
 This is the scheduler of [ScoreJS](http://github.com/danigb/scorejs)
-and works easy with [soundfont-player](http://github.com/danigb/soundfont-player))
+and works easy with [soundfont-player](http://github.com/danigb/soundfont-player)
 
 ```js
 var ctx = new AudioContext();
@@ -45,7 +46,7 @@ npm i -g http-server
 http-server
 ```
 
-And visit [http://localhost:8080/example](http://localhost:8080/example)
+And visit `http://localhost:8080/example`
 
 ## License
 

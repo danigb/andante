@@ -1,7 +1,7 @@
 {
   "name": "andante",
   "version": "0.1.0",
-  "description": "Quick music notation player for web",
+  "description": "Yet another music scheduler for web audio",
   "main": "index.js",
   "scripts": {
     "test": "vows test/*.js",
